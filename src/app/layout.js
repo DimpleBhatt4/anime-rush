@@ -1,5 +1,21 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Caveat, M_PLUS_Rounded_1c } from "next/font/google";
+import PaginationWrapper from "./components/paginationWrapper/PaginationWrapper";
+
 import "./globals.css";
+import NavBar from "./components/navbar/Navbar";
+
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
+  weight: ["400", "700"], // adjust as per your design
+});
+
+const mPlus = M_PLUS_Rounded_1c({
+  variable: "--font-mplus-rounded",
+  subsets: ["latin"],
+  weight: ["400", "700"], // you can include other weights as needed
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,11 +34,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang='en'>
+      <body className={`${caveat.variable} ${mPlus.variable} antialiased`}>
+        <div className='min-h-screen flex flex-col'>
+          <NavBar />
+          <main className='flex-grow'>{children}</main>
+
+          {/* <PaginationWrapper /> */}
+        </div>
       </body>
     </html>
   );
