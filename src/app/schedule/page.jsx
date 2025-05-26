@@ -8,7 +8,7 @@ const page = () => {
   const [daywiseSchedule, setDaywiseSchedule] = useState([
     {
       day: "All",
-      url: "https://api.jikan.moe/v4/schedules?limit=10",
+      url: "https://api.jikan.moe/v4/schedules",
       isActive: true,
       currPage: 1
     },

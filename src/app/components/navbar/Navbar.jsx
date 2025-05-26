@@ -15,8 +15,7 @@ import SearchBar from "../searchbar/SearchBar";
 const navigation = [
   { name: "Anime", href: "/anime", current: true },
   { name: "Manga", href: "/manga", current: false },
-  { name: "Watch", href: "#", current: false },
-  { name: "Read", href: "#", current: false },
+  { name: "Watch", href: "/promotion", current: false },
 ];
 
 function classNames(...classes) {

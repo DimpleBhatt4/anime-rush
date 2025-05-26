@@ -1,50 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import useFetch from "../utils/useFetch";
-import Card from "../components/card/Card";
-import Pagination from "../components/footer/pagination/Pagination";
+import useFetch from "../../utils/useFetch";
+import Card from "../../components/card/Card";
 
 const page = () => {
   const [animeCategories, setAnimeCategories] = useState([
     {
-      category: "All anime",
-      url: `https://api.jikan.moe/v4/anime?limit=10&page=1`,
+      category: "Just Added",
+      url: `https://api.jikan.moe/v4/watch/promos?limit=10&page=1`,
       isActive: true,
       currPage: 1,
     },
     {
-      category: "Top Airing",
-      url: "https://api.jikan.moe/v4/top/anime?filter=airing&limit=10&page=1",
-      isActive: false,
-      currPage: 1,
-    },
-    {
-      category: "Top upcoming",
-      url: "https://api.jikan.moe/v4/anime?filter=upcoming&limit=10&page=1",
-      isActive: false,
-      currPage: 1,
-    },
-    {
-      category: "Top Movies",
-      url: "https://api.jikan.moe/v4/top/anime?type=movie&limit=10&page=1",
-      isActive: false,
-      currPage: 7,
-    },
-    {
-      category: "Top TV Series",
-      url: "https://api.jikan.moe/v4/top/anime?type=tv&limit=10&page=1",
-      isActive: false,
-      currPage: 1,
-    },
-    {
-      category: "Top Special",
-      url: "https://api.jikan.moe/v4/top/anime?type=special&limit=10&page=1",
-      isActive: false,
-      currPage: 1,
-    },
-    {
       category: "Most Popular",
-      url: "https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=10&page=1",
+      url: "https://api.jikan.moe/v4/watch/episodes/popular?limit=10",
       isActive: false,
       currPage: 1,
     },
@@ -106,19 +75,38 @@ const page = () => {
       <div className='flex-grow'>
         <div className='flex flex-wrap justify-center my-4 gap-4'>
           {data?.map((item, index) => (
-            <Card
-              key={index}
-              img_url={item.images.jpg.large_image_url}
-              title={item?.title}
-              id={item.mal_id}
-            />
+            <div key={index}>
+              {/*info */}
+              <div>
+                <h1 className='text-2xl font-bold my-4'>{item?.title}</h1>
+              </div>
+              <div className='aspect-video w-[80%]'>
+                <iframe
+                  className='w-full h-full rounded-lg'
+                  src={`${item?.trailer?.embed_url}`}
+                  title='YouTube video player'
+                  allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+                  allowFullScreen
+                />
+              </div>
+            </div>
           ))}
         </div>
       </div>
 
       {/* Pagination */}
       <div className='flex justify-between mx-auto w-full border-t border-gray-300 p-4'>
-        <div>Showing {pagination.current_page===1 ? pagination.current_page : pagination.current_page*10} to {pagination.current_page===1 ? 10 : pagination.current_page*10+10} of {pagination?.items?.total} results</div>
+        <div>
+          Showing{" "}
+          {pagination.current_page === 1
+            ? pagination.current_page
+            : pagination.current_page * 10}{" "}
+          to{" "}
+          {pagination.current_page === 1
+            ? 10
+            : pagination.current_page * 10 + 10}{" "}
+          of {pagination?.items?.total} results
+        </div>
         <div className='flex gap-4'>
           <button
             className={`flex justify-center items-center border w-[100px] px-4 py-2 rounded-lg ${
