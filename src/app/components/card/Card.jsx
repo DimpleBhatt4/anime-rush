@@ -4,7 +4,7 @@ import ButtonStyle from '../buttonStyle/ButtonStyle';
 import Image from "next/image";
 
 
-const Card = ({index, img_url, title}) => {
+const Card = ({index, img_url, title, id}) => {
   return (
     <div className="border rounded-lg w-[20%]">
               <div className="p-2 flex flex-col justify-center items-center">
@@ -18,7 +18,7 @@ const Card = ({index, img_url, title}) => {
                 </div>
                  <div className='flex flex-col my-2 items-center'>
                   <h1 className='font-bold text-sm'>{title}</h1>
-                  <Link className="text-xs my-2" href={''}>
+                  <Link className="text-xs my-2" href={ `/anime/${id}`}>
                     <ButtonStyle value={'More'}></ButtonStyle>
                   </Link>
                 </div>

@@ -4,6 +4,7 @@ function useFetch(url) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [pagination, setPagination] =useState({})
 
   useEffect(() => {
     setLoading(true);
@@ -23,6 +24,7 @@ function useFetch(url) {
         );
         console.log("response", uniqueArr);
         setData(uniqueArr);
+        setPagination(res_json.pagination)
       } catch (error) {
         setError(error.message);
       } finally {
@@ -33,7 +35,7 @@ function useFetch(url) {
     fetchResponse();
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, pagination };
 }
 
 export default useFetch;

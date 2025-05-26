@@ -41,7 +41,9 @@ const SidePanel = ({ title, data }) => {
                 />
               </div>
               <div className='flex flex-col w-full'>
-                <h1 className='font-bold text-xs'>{item?.title}</h1>
+                <Link href={`/anime/${item.mal_id}`}>
+                  <h1 className='font-bold text-xs'>{item?.title}</h1>
+                </Link>
                 <p className='text-xs'>
                   {item?.episodes} {item.episodes && "episodes"}
                 </p>

@@ -2,12 +2,12 @@
 import Card from '@/app/components/card/Card'
 import Pagination from '@/app/components/footer/pagination/Pagination'
 import useFetch from '@/app/utils/useFetch'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 
 const page = () => {
   const [pageNum, setPageNum] = useState(1)
-  const {data, pagination} = useFetch(`https://api.jikan.moe/v4/top/anime?filter=airing&limit=10&page=${pageNum}`)
-  console.log(pagination)
+  const {data, pagination} = useFetch(`https://api.jikan.moe/v4/top/anime?limit=10&page=${pageNum}`)
+  console.log("pagination", pagination)
   return (
       <div className='min-h-screen flex flex-col'>
       <div className='flex-grow'>
@@ -23,7 +23,7 @@ const page = () => {
         </div>
       </div>
 
-      <Pagination currentPage={pagination.current_page} totalItems={pagination?.items?.total} setPageNum={setPageNum} />
+      <Pagination currentPage={pageNum} totalItems={pagination?.items?.total} setPageNum={setPageNum}   />
     </div>
   )
 }

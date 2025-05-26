@@ -1,6 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import { Caveat, M_PLUS_Rounded_1c } from "next/font/google";
-import PaginationWrapper from "./components/paginationWrapper/PaginationWrapper";
 
 import "./globals.css";
 import NavBar from "./components/navbar/Navbar";

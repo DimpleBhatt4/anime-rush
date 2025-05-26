@@ -100,12 +100,13 @@ const page = () => {
               key={index}
               img_url={item.images.jpg.large_image_url}
               title={item?.title}
+              id={item.mal_id}
             />
           ))}
         </div>
       </div>
 
-      <Pagination />
+      {/* <Pagination /> */}
     </div>
   );
 };

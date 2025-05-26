@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper/modules";
+import Link from "next/link";
 
 export default function Carousel({ data }) {
   return (
@@ -46,9 +47,9 @@ export default function Carousel({ data }) {
                   <p className='text-lg body-rounded  my-2'>
                     {item?.synopsis?.split(" ")?.slice(0, 20)?.join(" ")}
                     {item.synopsis && "... "}
-                    <button className='text-sm text-blue-500 underline mt-auto align-'>
+                    <Link href={`/anime/${item.mal_id}`} className='text-sm text-blue-500 underline mt-auto'>
                       More
-                    </button>
+                    </Link>
                   </p>
                 </div>
               </div>
