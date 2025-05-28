@@ -1,30 +1,28 @@
-import React from 'react'
+import React from "react";
 import Link from "next/link";
-import ButtonStyle from '../buttonStyle/ButtonStyle';
+import ButtonStyle from "../buttonStyle/ButtonStyle";
 import Image from "next/image";
 
-
-const Card = ({index, img_url, title, id}) => {
+const Card = ({ index, img_url, title, id }) => {
   return (
-    <div className="border rounded-lg w-[20%]">
-              <div className="p-2 flex flex-col justify-center items-center">
-                <div className='flex-shrink-0 w-[280px] h-[250px] relative'>
-                  <Image
-                    src={img_url}
-                    fill
-                    alt={"Image"}
-                    className='rounded-lg object-fill'
-                  />
-                </div>
-                 <div className='flex flex-col my-2 items-center'>
-                  <h1 className='font-bold text-sm'>{title}</h1>
-                  <Link className="text-xs my-2" href={ `/anime/${id}`}>
-                    <ButtonStyle value={'More'}></ButtonStyle>
-                  </Link>
-                </div>
-              </div>
+    <div className="border rounded-lg w-[45%] md:w-[20%] p-2 flex flex-col items-center">
+      <div className="w-full h-[50%] aspect-[2/3] md:aspect-square relative">
+        <Image
+          src={img_url}
+          alt="Anime"
+          fill
+          className="rounded-md object-cover"
+        />
+      </div>
+      <div className="mt-2 text-center">
+        <h1 className="font-semibold text-xs line-clamp-2">{title}</h1>
+        <Link href={`/anime/${id}`} className="text-[10px] inline-block mt-1">
+          <ButtonStyle value="More" />
+        </Link>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+
+export default Card;

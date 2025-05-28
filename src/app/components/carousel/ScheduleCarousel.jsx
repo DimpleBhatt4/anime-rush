@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "./Carousel";
 import useFetch from "@/app/utils/useFetch";
 import Link from "next/link";
+import { getFilteredDataByID } from "@/app/utils/getFilteredDataByID";
 
 const ScheduleContainer = ({ title }) => {
   const days = [
@@ -20,6 +21,7 @@ const ScheduleContainer = ({ title }) => {
     `https://api.jikan.moe/v4/schedules?filter=${days[today].toLowerCase()}`
   );
 
+  const filteredData = schedule ? getFilteredDataByID(schedule?.data) : [];
   return (
     <div className='border w-full sm:w-[60vw] py-4 px-6 right-container'>
       <div className='flex justify-between'>
@@ -41,7 +43,7 @@ const ScheduleContainer = ({ title }) => {
             />
           </svg></Link>
       </div>
-      {schedule && <Carousel data={schedule} />}
+      {filteredData && <Carousel data={filteredData} />}
     </div>
   );
 };

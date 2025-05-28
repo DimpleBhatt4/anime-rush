@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import useFetch from "../utils/useFetch";
 import Card from "../components/card/Card";
 import Pagination from "../components/footer/pagination/Pagination";
+import SubNavBar from "../components/navbar/SubNavBar";
+import { getFilteredDataByID } from "../utils/getFilteredDataByID";
 
 const page = () => {
   const [daywiseSchedule, setDaywiseSchedule] = useState([
@@ -10,92 +12,68 @@ const page = () => {
       day: "All",
       url: "https://api.jikan.moe/v4/schedules",
       isActive: true,
-      currPage: 1
+      currPage: 1,
     },
     {
       day: "Monday",
       url: "https://api.jikan.moe/v4/schedules?filter=monday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
     {
       day: "Tuesday",
       url: "https://api.jikan.moe/v4/schedules?filter=tuesday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
     {
       day: "Wednesday",
       url: "https://api.jikan.moe/v4/schedules?filter=wednesday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
     {
       day: "Thursday",
       url: "https://api.jikan.moe/v4/schedules?filter=thursday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
     {
       day: "Friday",
       url: "https://api.jikan.moe/v4/schedules?filter=friday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
     {
       day: "Saturday",
       url: "https://api.jikan.moe/v4/schedules?filter=saturday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
     {
       day: "Sunday",
       url: "https://api.jikan.moe/v4/schedules?filter=sunday",
       isActive: false,
-      currPage: 1
-
+      currPage: 1,
     },
   ]);
   const [currURL, setCurrURL] = useState(daywiseSchedule[0].url);
 
   const { data } = useFetch(currURL);
-  function handleDaySchedule(selectedObj) {
-    const updatedSchedule = daywiseSchedule.map((item) =>
-      item.day === selectedObj.day
-        ? { ...item, isActive: true }
-        : { ...item, isActive: false }
-    );
-    setDaywiseSchedule(updatedSchedule);
-    setCurrURL(selectedObj.url);
-  }
+
+  const filteredData = data ? getFilteredDataByID(data?.data) : [];
 
   return (
     <div className='min-h-screen flex flex-col'>
       {/* Sub navigation bar for categories */}
-      <div className='my-6'>
-        <ul className='flex justify-center border-b gap-8'>
-          {daywiseSchedule.map((item) => (
-            <li
-              key={item.day}
-              className={`border-t border-l border-r w-[8%] text-center py-1 text-sm rounded-t-lg ${
-                item.isActive && "bg-white text-black"
-              }`}>
-              <button onClick={() => handleDaySchedule(item)}>
-                {item.day}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <SubNavBar
+        navData={daywiseSchedule}
+        setNavData={setDaywiseSchedule}
+        setCurrURL={setCurrURL}
+      />
       <div className='flex-grow'>
-        <div className='flex flex-wrap justify-center my-4 gap-4'>
-          {data?.map((item, index) => (
+        <div className='flex flex-wrap  md:flex-row justify-center items-center my-4 gap-4'>
+          {filteredData?.map((item, index) => (
             <Card
               key={index}
               img_url={item.images.jpg.large_image_url}

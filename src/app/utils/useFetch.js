@@ -14,16 +14,11 @@ function useFetch(url) {
     async function fetchResponse() {
       try {
         const response = await fetch(url);
-        const res_json = await response.json();
         if (!response.ok) {
           throw new Error(`Response status: ${response.status}`);
         }
-        const uniqueArr = res_json.data.filter(
-          (item, index, self) =>
-            index === self.findIndex((obj) => obj.mal_id === item.mal_id)
-        );
-        console.log("response", uniqueArr);
-        setData(uniqueArr);
+        const res_json = await response.json();
+        setData(res_json);
         setPagination(res_json.pagination)
       } catch (error) {
         setError(error.message);

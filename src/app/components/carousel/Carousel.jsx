@@ -8,11 +8,20 @@ import { Pagination, Navigation } from "swiper/modules";
 import Link from "next/link";
 
 export default function Carousel({ data }) {
+  console.log("data from carousel", data)
   return (
     <>
       <Swiper
-        slidesPerView={2}
-        spaceBetween={30}
+        breakpoints={{
+          0: {
+            slidesPerView: 1, // 👈 mobile devices
+            spaceBetween: 10,
+          },
+          640: {
+            slidesPerView: 2, // 👈 tablets and up
+            spaceBetween: 30,
+          },
+        }}
         loop={true}
         pagination={{
           clickable: true,
@@ -23,7 +32,7 @@ export default function Carousel({ data }) {
         {data?.map((item) => {
           return (
             <SwiperSlide key={item.mal_id}>
-              <div className='flex gap-2'>
+              <div className='flex flex-col items-center md:flex-row gap-2'>
                 <div className='flex-shrink-0 w-[100px] h-[140px] relative'>
                   <Image
                     src={item.images.jpg.large_image_url}
@@ -32,7 +41,7 @@ export default function Carousel({ data }) {
                     className='rounded-lg object-cover'
                   />
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col items-center'>
                   <h1 className='font-bold text-sm'>{item?.title}</h1>
                   <p className='text-xs'>
                     (
@@ -44,10 +53,12 @@ export default function Carousel({ data }) {
                     ))}
                     )
                   </p>
-                  <p className='text-lg body-rounded  my-2'>
-                    {item?.synopsis?.split(" ")?.slice(0, 20)?.join(" ")}
+                  <p className='text-lg body-rounded  my-2 text-center'>
+                    {item?.synopsis?.length<20 ? item?.synopsis : item?.synopsis?.split(" ")?.slice(0, 20)?.join(" ")}
                     {item.synopsis && "... "}
-                    <Link href={`/anime/${item.mal_id}`} className='text-sm text-blue-500 underline mt-auto'>
+                    <Link
+                      href={`/anime/${item.mal_id}`}
+                      className='text-sm text-blue-500 underline mt-auto'>
                       More
                     </Link>
                   </p>

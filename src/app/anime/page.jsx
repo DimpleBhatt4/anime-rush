@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../utils/useFetch";
 import Card from "../components/card/Card";
 import Pagination from "../components/footer/pagination/Pagination";
+import { getFilteredDataByID } from "../utils/getFilteredDataByID";
+import SubNavBar from "../components/navbar/SubNavBar";
 
 const page = () => {
   const [animeCategories, setAnimeCategories] = useState([
@@ -52,16 +54,8 @@ const page = () => {
   const [currURL, setCurrURL] = useState(animeCategories[0].url);
 
   const { data, pagination } = useFetch(currURL);
+   const filteredData =  data ? getFilteredDataByID(data?.data) : []
 
-  function handleAnimeCategory(selectedObj) {
-    let updatedCategory = animeCategories.map((item) =>
-      item.category === selectedObj.category
-        ? { ...item, isActive: true }
-        : { ...item, isActive: false }
-    );
-    setAnimeCategories(updatedCategory);
-    setCurrURL(selectedObj.url);
-  }
   function handlePaginate(direction) {
     let updatedCategories = animeCategories.map((item) => {
       if (item.isActive) {
@@ -88,24 +82,12 @@ const page = () => {
   return (
     <div className='min-h-screen flex flex-col'>
       {/* Sub navigation bar for categories */}
-      <div className='my-6'>
-        <ul className='flex justify-center border-b gap-8'>
-          {animeCategories.map((item) => (
-            <li
-              key={item.category}
-              className={`border-t border-l border-r w-[8%] text-center py-1 text-sm rounded-t-lg ${
-                item.isActive && "bg-white text-black"
-              }`}>
-              <button onClick={() => handleAnimeCategory(item)}>
-                {item.category}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <SubNavBar navData={animeCategories}
+        setNavData={setAnimeCategories}
+        setCurrURL={setCurrURL} />
       <div className='flex-grow'>
-        <div className='flex flex-wrap justify-center my-4 gap-4'>
-          {data?.map((item, index) => (
+        <div className='flex flex-wrap  md:flex-row justify-center items-center my-4 gap-4'>
+          {filteredData?.map((item, index) => (
             <Card
               key={index}
               img_url={item.images.jpg.large_image_url}

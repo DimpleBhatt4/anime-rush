@@ -26,85 +26,66 @@ export default function NavBar() {
   return (
     <Disclosure as='nav' className='border-b border-white shadow-xl'>
       <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-        <div className="relative flex h-16 items-center justify-center sm:justify-between">
-          <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
-            {/* Mobile menu button*/}
-            <DisclosureButton className='group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset'>
-              <span className='absolute -inset-0.5' />
-              <span className='sr-only'>Open main menu</span>
-              <Bars3Icon
-                aria-hidden='true'
-                className='block size-6 group-data-open:hidden'
-              />
-              <XMarkIcon
-                aria-hidden='true'
-                className='hidden size-6 group-data-open:block'
-              />
-            </DisclosureButton>
-          </div>
-          <div className='flex justify-center items-center'>
-            <Link href={'/'} className='flex shrink-0 items-center'>
-              <Image src='/logo.png' height={70} width={70} alt='logo' className="w-1/2 h-1/2 sm:w-[70px] sm:h-[70px]" />
-            </Link>
-            <div className="hidden sm:block sm:ml-6">
-              <div className='flex space-x-4'>
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
-                    )}>
-                    {item.name}{" "}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-          <div>
-            <SearchBar />
-          </div>
-          <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-            {/* Profile dropdown */}
-            <Menu as='div' className='relative ml-3'>
-              <div>
-                <MenuButton className='relative flex rounded-full bg-white text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden p-1'>
-                  <span className='absolute -inset-1.5' />
-                  <span className='sr-only'>Open user menu</span>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='size-6 text-black'>
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
-                    />
-                  </svg>
-                </MenuButton>
-              </div>
-              <MenuItems
-                transition
-                className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in'>
-                <MenuItem>
-                <Link href={'/profile'} className='block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden'>Your Profile</Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link href={'/profile'} className='block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden'>Sign In/ Login</Link>
-                </MenuItem>
-                <MenuItem>
-                  <Link href={'/profile'} className='block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden'>Help</Link>
-                </MenuItem>
-              </MenuItems>
-            </Menu>
-          </div>
-        </div>
+       <div className="flex h-16 items-center justify-around">
+  {/* Left: Mobile Menu + Logo */}
+  <div className="flex items-center">
+    <div className="sm:hidden mr-2">
+      <DisclosureButton className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">
+        <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+        <XMarkIcon className="hidden h-6 w-6" aria-hidden="true" />
+      </DisclosureButton>
+    </div>
+    <Link href="/" className="flex items-center">
+      <Image
+        src="/logo.png"
+        height={40}
+        width={40}
+        alt="logo"
+        className="object-contain md:w-[80px]"
+      />
+    </Link>
+  </div>
+
+  {/* Center: Navigation (Only visible on sm and above) */}
+  <div className="hidden sm:flex sm:space-x-4">
+    {navigation.map((item) => (
+      <Link
+        key={item.name}
+        href={item.href}
+        className={classNames(
+          item.current
+            ? "bg-gray-900 text-white"
+            : "text-gray-300 hover:bg-gray-700 hover:text-white",
+          "rounded-md px-3 py-2 text-sm font-medium"
+        )}
+      >
+        {item.name}
+      </Link>
+    ))}
+  </div>
+
+  {/* Right: Search + Wishlist */}
+  <div className="flex items-center gap-2">
+    <SearchBar />
+    <Link href="/wishlist" className="p-1 rounded-full bg-white">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="h-6 w-6 text-black"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+        />
+      </svg>
+    </Link>
+  </div>
+</div>
+
       </div>
 
       <DisclosurePanel className='sm:hidden'>

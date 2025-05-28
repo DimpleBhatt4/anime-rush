@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../utils/useFetch";
 import Card from "../components/card/Card";
 import Pagination from "../components/footer/pagination/Pagination";
+import SubNavBar from "../components/navbar/SubNavBar";
+import { getFilteredDataByID } from "../utils/getFilteredDataByID";
 
 const page = () => {
   const [animeCategories, setAnimeCategories] = useState([
@@ -14,7 +16,7 @@ const page = () => {
     },
     {
       category: "Top Manga",
-      url: "https://api.jikan.moe/v4/top/manga?filter=airing&limit=10&page=1",
+      url: "https://api.jikan.moe/v4/top/manga?filter=favorite&limit=10&page=1",
       isActive: false,
       currPage: 1,
     },
@@ -53,15 +55,8 @@ const page = () => {
 
   const { data, pagination } = useFetch(currURL);
 
-  function handleAnimeCategory(selectedObj) {
-    let updatedCategory = animeCategories.map((item) =>
-      item.category === selectedObj.category
-        ? { ...item, isActive: true }
-        : { ...item, isActive: false }
-    );
-    setAnimeCategories(updatedCategory);
-    setCurrURL(selectedObj.url);
-  }
+  const filteredData = data ? getFilteredDataByID(data?.data) : [];
+
   function handlePaginate(direction) {
     let updatedCategories = animeCategories.map((item) => {
       if (item.isActive) {
@@ -88,24 +83,14 @@ const page = () => {
   return (
     <div className='min-h-screen flex flex-col'>
       {/* Sub navigation bar for categories */}
-      <div className='my-6'>
-        <ul className='flex justify-center border-b gap-8'>
-          {animeCategories.map((item) => (
-            <li
-              key={item.category}
-              className={`border-t border-l border-r w-[8%] text-center py-1 text-sm rounded-t-lg ${
-                item.isActive && "bg-white text-black"
-              }`}>
-              <button onClick={() => handleAnimeCategory(item)}>
-                {item.category}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <SubNavBar
+        navData={animeCategories}
+        setNavData={setAnimeCategories}
+        setCurrURL={setCurrURL}
+      />
       <div className='flex-grow'>
-        <div className='flex flex-wrap justify-center my-4 gap-4'>
-          {data?.map((item, index) => (
+        <div className='flex flex-wrap  md:flex-row justify-center items-center my-4 gap-4'>
+          {filteredData?.map((item, index) => (
             <Card
               key={index}
               img_url={item.images.jpg.large_image_url}
@@ -118,7 +103,17 @@ const page = () => {
 
       {/* Pagination */}
       <div className='flex justify-between mx-auto w-full border-t border-gray-300 p-4'>
-        <div>Showing {pagination.current_page===1 ? pagination.current_page : pagination.current_page*10} to {pagination.current_page===1 ? 10 : pagination.current_page*10+10} of {pagination?.items?.total} results</div>
+        <div>
+          Showing{" "}
+          {pagination.current_page === 1
+            ? pagination.current_page
+            : pagination.current_page * 10}{" "}
+          to{" "}
+          {pagination.current_page === 1
+            ? 10
+            : pagination.current_page * 10 + 10}{" "}
+          of {pagination?.items?.total} results
+        </div>
         <div className='flex gap-4'>
           <button
             className={`flex justify-center items-center border w-[100px] px-4 py-2 rounded-lg ${

@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../../utils/useFetch";
 import Card from "../../components/card/Card";
+import SubNavBar from "@/app/components/navbar/SubNavBar";
+import { getFilteredPromoByID } from "@/app/utils/getFilteredPromoByID";
+import Image from "next/image";
+import Link from "next/link";
 
 const page = () => {
   const [animeCategories, setAnimeCategories] = useState([
@@ -22,15 +26,8 @@ const page = () => {
 
   const { data, pagination } = useFetch(currURL);
 
-  function handleAnimeCategory(selectedObj) {
-    let updatedCategory = animeCategories.map((item) =>
-      item.category === selectedObj.category
-        ? { ...item, isActive: true }
-        : { ...item, isActive: false }
-    );
-    setAnimeCategories(updatedCategory);
-    setCurrURL(selectedObj.url);
-  }
+  const filteredData = data ? getFilteredPromoByID(data?.data) : [];
+
   function handlePaginate(direction) {
     let updatedCategories = animeCategories.map((item) => {
       if (item.isActive) {
@@ -53,41 +50,42 @@ const page = () => {
     });
     setAnimeCategories(updatedCategories);
   }
-
+  // item?.trailer?.images?.image_url
   return (
     <div className='min-h-screen flex flex-col'>
       {/* Sub navigation bar for categories */}
-      <div className='my-6'>
-        <ul className='flex justify-center border-b gap-8'>
-          {animeCategories.map((item) => (
-            <li
-              key={item.category}
-              className={`border-t border-l border-r w-[8%] text-center py-1 text-sm rounded-t-lg ${
-                item.isActive && "bg-white text-black"
-              }`}>
-              <button onClick={() => handleAnimeCategory(item)}>
-                {item.category}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <SubNavBar
+        navData={animeCategories}
+        setNavData={setAnimeCategories}
+        setCurrURL={setCurrURL}
+      />
       <div className='flex-grow'>
-        <div className='flex flex-wrap justify-center my-4 gap-4'>
-          {data?.map((item, index) => (
-            <div key={index}>
-              {/*info */}
-              <div>
-                <h1 className='text-2xl font-bold my-4'>{item?.title}</h1>
-              </div>
-              <div className='aspect-video w-[80%]'>
-                <iframe
-                  className='w-full h-full rounded-lg'
-                  src={`${item?.trailer?.embed_url}`}
-                  title='YouTube video player'
-                  allow='accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-                  allowFullScreen
+        <div className='flex flex-wrap  md:flex-row justify-center items-center my-4 gap-4'>
+          {filteredData?.map((item, index) => (
+            <div
+              key={index}
+              className='w-[10vw] h-[auto] border rounded-lg  p-2 flex flex-col items-center'>
+              <div className='w-[60%] h-auto aspect-[2/3] md:aspect-square relative shrink-0'>
+                <Image
+                  src={item?.trailer?.images?.image_url}
+                  alt='Anime'
+                  fill
+                  className='rounded-lg object-cover'
                 />
+              </div>
+              <div className='mt-2 text-center'>
+                <h1 className='font-semibold text-xs line-clamp-2'>
+                  {item?.title}
+                </h1>
+              </div>
+              <div className='my-2'>
+                <a
+                  href={`${item?.trailer?.url}`}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='border py-1 px-2 my-2 rounded-lg'>
+                  PLAY
+                </a>
               </div>
             </div>
           ))}
