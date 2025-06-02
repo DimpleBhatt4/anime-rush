@@ -96,6 +96,7 @@ const page = () => {
               img_url={item.images.jpg.large_image_url}
               title={item?.title}
               id={item.mal_id}
+              type={"manga"}
             />
           ))}
         </div>
