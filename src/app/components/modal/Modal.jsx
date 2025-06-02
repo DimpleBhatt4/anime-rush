@@ -14,6 +14,7 @@ export default function SimpleModal() {
   useEffect(() => {
     if (data) {
       setResult(data); 
+      console.log("result", result)
     }
   }, [data]);
 

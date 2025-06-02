@@ -26,7 +26,18 @@ const page = () => {
 
   const { data, pagination } = useFetch(currURL);
 
-  const filteredData = data ? getFilteredPromoByID(data?.data) : [];
+  let uniqueData = data ? getFilteredPromoByID(data?.data) :  []
+  let filteredData = []
+
+  if (currURL !== animeCategories[0].url) {
+    filteredData = uniqueData.filter((item)=>item.region_locked!==true)
+  }else{
+    filteredData = uniqueData
+  }
+
+  console.log("data", data);
+
+  console.log("filtered data", filteredData);
 
   function handlePaginate(direction) {
     let updatedCategories = animeCategories.map((item) => {
@@ -50,7 +61,6 @@ const page = () => {
     });
     setAnimeCategories(updatedCategories);
   }
-  // item?.trailer?.images?.image_url
   return (
     <div className='min-h-screen flex flex-col'>
       {/* Sub navigation bar for categories */}
@@ -64,10 +74,10 @@ const page = () => {
           {filteredData?.map((item, index) => (
             <div
               key={index}
-              className='w-[10vw] h-[auto] border rounded-lg  p-2 flex flex-col items-center'>
-              <div className='w-[60%] h-auto aspect-[2/3] md:aspect-square relative shrink-0'>
+              className='border rounded-lg w-[45%] md:w-[20%] p-2 flex flex-col items-center'>
+              <div className='w-full h-[50%] aspect-[2/3] md:aspect-square relative'>
                 <Image
-                  src={item?.trailer?.images?.image_url}
+                  src={currURL === animeCategories[0].url ? item?.trailer?.images?.large_image_url : item?.entry?.images?.jpg?.image_url}
                   alt='Anime'
                   fill
                   className='rounded-lg object-cover'

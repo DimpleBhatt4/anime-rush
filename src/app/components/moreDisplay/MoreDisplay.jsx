@@ -5,7 +5,7 @@ import { getFilteredDataByID } from '@/app/utils/getFilteredDataByID'
 import useFetch from '@/app/utils/useFetch'
 import React, { useState } from 'react'
 
-const MoreDisplay = ({url}) => {
+const MoreDisplay = ({url, type}) => {
   const [pageNum, setPageNum] = useState(1)
   const {data, pagination} = useFetch(`${url}&page=${pageNum}`)
    const filteredData =  data ? getFilteredDataByID(data?.data) : []
@@ -19,6 +19,7 @@ const MoreDisplay = ({url}) => {
               img_url={item.images.jpg.large_image_url}
               title={item?.title}
               id={item.mal_id}
+              type={type}
             />
           ))}
         </div>

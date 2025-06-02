@@ -4,7 +4,7 @@ import React from 'react'
 const page = () => {
   return (
     <>
-      <MoreDisplay url={'https://api.jikan.moe/v4/top/anime?limit=10'} />
+      <MoreDisplay url={'https://api.jikan.moe/v4/top/anime?limit=10'} type={"anime"} />
     </>
   )
 }

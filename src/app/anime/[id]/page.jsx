@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <>
-      <MorePage id={id} url={url} />
+      <MorePage id={id} url={url} type={"anime"} />
     </>
   );
 }

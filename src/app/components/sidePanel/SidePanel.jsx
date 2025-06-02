@@ -14,7 +14,7 @@ const SidePanel = ({ title, data }) => {
     <div className='py-2 px-6'>
       <div className='flex justify-between items-center mb-4 '>
         <h1 className='font-bold text-2xl'>
-          {title} {wishlist.length}
+          {title}
         </h1>
         <Link className='flex items-center gap-1' href={"/anime/topAiring"}>
           <span>More</span>
@@ -37,7 +37,7 @@ const SidePanel = ({ title, data }) => {
             <div
               key={item.mal_id}
               className='relative flex items-center gap-x-4 my-4'>
-              <span className='absolute z-10 left-[-4%] bottom-[-5%] font-bold text-4xl text-[#CB3E34]'>
+              <span className='absolute z-10 left-[-2%] bottom-[10%] md:left-[-4%] md:bottom-[-5%] font-bold text-4xl text-[#CB3E34]'>
                 {index + 1}
               </span>
               <div className='flex-shrink-0 w-[60px] h-[60px] relative'>
@@ -50,12 +50,12 @@ const SidePanel = ({ title, data }) => {
               </div>
               <div className='flex flex-col w-full'>
                 <Link href={`/anime/${item.mal_id}`}>
-                  <h1 className='font-bold text-xs'>{item?.title}</h1>
+                  <h1 className='font-bold text-lg md:text-xs'>{item?.title}</h1>
                 </Link>
-                <p className='text-xs'>
+                <p className='text-sm md:text-xs'>
                   {item?.episodes} {item.episodes && "episodes"}
                 </p>
-                <div className='text-xs flex justify-between items-center'>
+                <div className='text-sm md:text-xs flex justify-between items-center'>
                   <div className='flex items-center'>
                     <span>{item?.score}</span>
                     <span>
@@ -74,11 +74,11 @@ const SidePanel = ({ title, data }) => {
                   </div>
 
                   {isWishlisted(wishlist, item.mal_id) ? (
-                    <button onClick={() =>removeItem(item.mal_id)}>
+                    <button className="text-lg md:text-sm border px-3 py-1 rounded-md" onClick={() =>removeItem(item.mal_id)}>
                       Added
                     </button>
                   ) : (
-                    <button onClick={() => addItem(item)}>Add</button>
+                    <button className="text-lg md:text-sm border px-3 py-1 rounded-md" onClick={() => addItem(item)}>Add</button>
                   )}
                 </div>
               </div>
