@@ -9,7 +9,6 @@ const MoreDisplay = ({url}) => {
   const [pageNum, setPageNum] = useState(1)
   const {data, pagination} = useFetch(`${url}&page=${pageNum}`)
    const filteredData =  data ? getFilteredDataByID(data?.data) : []
-  console.log("pagination", pagination)
   return (
       <div className='min-h-screen flex flex-col justify-center'>
       <div className='flex-grow'>

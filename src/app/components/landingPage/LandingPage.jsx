@@ -13,8 +13,6 @@ const LandingPage = () => {
     const {data: topAiring} = useFetch("https://api.jikan.moe/v4/top/anime?filter=airing&limit=5")
     const filteredTopAnime =  topAnime ? getFilteredDataByID(topAnime?.data) : []
     const filteredTopAiring =  topAiring ? getFilteredDataByID(topAiring?.data) : []
-    console.log("Top Airing from landing page", filteredTopAiring)
-    console.log("Top Anime from landing page", filteredTopAnime)
 
 
   return (

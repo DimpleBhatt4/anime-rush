@@ -8,7 +8,6 @@ import { Pagination, Navigation } from "swiper/modules";
 import Link from "next/link";
 
 export default function Carousel({ data }) {
-  console.log("data from carousel", data)
   return (
     <>
       <Swiper

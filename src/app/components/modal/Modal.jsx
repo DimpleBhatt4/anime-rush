@@ -20,7 +20,6 @@ export default function SimpleModal() {
   useEffect(() => {
     // ✅ Only run showModal if dialog is available and not already open
     const dialog = dialogRef.current;
-    console.log("dialog", dialog)
     if (dialog && !dialog.open) {
       dialog.showModal();
     }

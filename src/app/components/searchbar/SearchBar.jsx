@@ -6,7 +6,6 @@ import { Button } from "@headlessui/react";
 const SearchBar = () => {
   const [searchClicked, setSearchClicked] = useState(false);
 
-  // console.log("Input value", inputVal)
   return (
     <>
       <button

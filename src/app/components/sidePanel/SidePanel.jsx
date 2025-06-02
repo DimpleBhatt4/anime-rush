@@ -1,15 +1,23 @@
-import React from "react";
+"use react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import useWishlistStore from "../../store/useWishlistStore";
+import isWishlisted from "../../utils/isWishlisted";
 
 const SidePanel = ({ title, data }) => {
-  console.log("top airing", data);
+  const wishlist = useWishlistStore((state) => state.wishlist);
+  const addItem = useWishlistStore((state) => state.addItem);
+  const removeItem = useWishlistStore((state) => state.removeItem);
+
   return (
     <div className='py-2 px-6'>
       <div className='flex justify-between items-center mb-4 '>
-        <h1 className='font-bold text-2xl'>{title}</h1>
-        <Link className='flex items-center gap-1' href={'/anime/topAiring'}>
-        <span>More</span>
+        <h1 className='font-bold text-2xl'>
+          {title} {wishlist.length}
+        </h1>
+        <Link className='flex items-center gap-1' href={"/anime/topAiring"}>
+          <span>More</span>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 24 24'
@@ -64,7 +72,14 @@ const SidePanel = ({ title, data }) => {
                       </svg>
                     </span>
                   </div>
-                  <button>Add</button>
+
+                  {isWishlisted(wishlist, item.mal_id) ? (
+                    <button onClick={() =>removeItem(item.mal_id)}>
+                      Added
+                    </button>
+                  ) : (
+                    <button onClick={() => addItem(item)}>Add</button>
+                  )}
                 </div>
               </div>
             </div>

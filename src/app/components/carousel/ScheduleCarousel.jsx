@@ -16,7 +16,6 @@ const ScheduleContainer = ({ title }) => {
     
   ];
   const today = new Date().getDay();
-  console.log(today)
   const { data: schedule } = useFetch(
     `https://api.jikan.moe/v4/schedules?filter=${days[today].toLowerCase()}`
   );
