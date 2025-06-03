@@ -8,6 +8,18 @@ const MorePage = ({ id, url }) => {
   useEffect(() => {
     setSelecCategoryData(data);
   }, [data]);
+  const formatNumToWords = (num) => {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + "M";
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(1) + "K";
+  } else {
+    return num;
+  }
+};
+  const members = formatNumToWords(selecCategoryData?.data?.members)
+  const scoredByUsers = formatNumToWords(selecCategoryData?.data?.scored_by)
+  console.log("members", members)
   if (!selecCategoryData) return <div>Loading...</div>;
   return (
     <>
@@ -32,7 +44,7 @@ const MorePage = ({ id, url }) => {
               <div className='flex flex-col  items-center border-r-1 border-white w-1/2'>
                 <span className='font-bold text-lg'>Score</span>
                 <span>{selecCategoryData?.data?.score}</span>
-                <span>{selecCategoryData?.data?.scored_by} Users</span>
+                <span>{scoredByUsers} Users</span>
               </div>
               <div className='flex flex-col md:flex-row justify-around items-center w-full px-4 gap-4'>
                 <div className='text-xl font-bold'>
@@ -42,7 +54,7 @@ const MorePage = ({ id, url }) => {
                   Popularity #{selecCategoryData?.data?.popularity}
                 </div>
                 <div className='text-xl font-bold'>
-                  Members {selecCategoryData?.data?.members}
+                  Members {members}
                 </div>
               </div>
             </div>
