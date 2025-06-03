@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useFetch from '@/app/utils/useFetch';
 import Link from 'next/link';
+import { getFilteredDataByID } from '@/app/utils/getFilteredDataByID';
 
 export default function SimpleModal() {
   const [query, setQuery] = useState('');
@@ -10,11 +11,12 @@ export default function SimpleModal() {
   const dialogRef = useRef(null);
 
   const { data } = useFetch(`https://api.jikan.moe/v4/anime?q=${query}`);
+  const filteredData = data ? getFilteredDataByID(data?.data) : []
 
   useEffect(() => {
     if (data) {
-      setResult(data); 
-      console.log("result", result)
+      setResult(filteredData); 
+      console.log("result", data)
     }
   }, [data]);
 
@@ -30,6 +32,7 @@ export default function SimpleModal() {
     dialogRef.current?.close();
   };
 
+  if(!result) return <div>Loading </div>
   return (
     <dialog
       ref={dialogRef}
@@ -40,11 +43,11 @@ export default function SimpleModal() {
         placeholder="Search your favorite anime here..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className="bg-black border border-white w-full sm:w-[30vw] rounded-lg px-2 sm:px-4 py-2 text-left text-white"
+        className="bg-gray-200 border border-black w-full sm:w-[30vw] rounded-lg px-2 sm:px-4 py-2 text-left text-white"
       />
 
       <ul className="mt-4 overflow-auto max-h-[60vh]">
-        {result?.map((item) => (
+        {filteredData.length!==0 && result?.map((item) => (
           <Link
            href={`/anime/${item.mal_id}`}
             key={item.mal_id}
@@ -53,7 +56,7 @@ export default function SimpleModal() {
           >
               <h2 className="text-black cursor-pointer hover:underline">{item.title}</h2>
           </Link>
-        ))}
+        )) }
       </ul>
 
       <form method="dialog" className="absolute right-[2%]">

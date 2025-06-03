@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Modal from "../modal/Modal";
-import { Button } from "@headlessui/react";
 
 const SearchBar = () => {
   const [searchClicked, setSearchClicked] = useState(false);
