@@ -3,6 +3,7 @@ import { Caveat, M_PLUS_Rounded_1c } from "next/font/google";
 
 import "./globals.css";
 import NavBar from "./components/navbar/Navbar";
+import Footer from "./components/footer/Footer";
 
 const caveat = Caveat({
   variable: "--font-caveat",
@@ -38,7 +39,7 @@ export default function RootLayout({ children }) {
         <div className='min-h-screen flex flex-col'>
           <NavBar />
           <main className='flex-grow'>{children}</main>
-
+          <Footer />
           {/* <PaginationWrapper /> */}
         </div>
       </body>
