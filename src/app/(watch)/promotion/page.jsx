@@ -87,6 +87,7 @@ const page = () => {
                   className='border py-1 px-2 my-2 rounded-lg'>
                   PLAY
                 </a>
+                
               </div>
             </div>
           ))}

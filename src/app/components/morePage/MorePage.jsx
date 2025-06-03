@@ -1,26 +1,39 @@
 import useFetch from "@/app/utils/useFetch";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import useWishlistStore from "@/app/store/useWishlistStore";
+import isWishlisted from "@/app/utils/isWishlisted";
 
 const MorePage = ({ id, url }) => {
+  const wishlist = useWishlistStore((state) => state.wishlist);
+  const addItem = useWishlistStore((state) => state.addItem);
+  const removeItem = useWishlistStore((state) => state.removeItem);
+
   const [selecCategoryData, setSelecCategoryData] = useState(null);
+  
   const { data } = useFetch(`${url}/${id}/full`);
+
   useEffect(() => {
     setSelecCategoryData(data);
+    console.log("setSelecCategoryData", selecCategoryData)
+
   }, [data]);
+
   const formatNumToWords = (num) => {
-  if (num >= 1000000) {
-    return (num / 1000000).toFixed(1) + "M";
-  } else if (num >= 1000) {
-    return (num / 1000).toFixed(1) + "K";
-  } else {
-    return num;
-  }
-};
-  const members = formatNumToWords(selecCategoryData?.data?.members)
-  const scoredByUsers = formatNumToWords(selecCategoryData?.data?.scored_by)
-  console.log("members", members)
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + "M";
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + "K";
+    } else {
+      return num;
+    }
+  };
+
+  const members = formatNumToWords(selecCategoryData?.data?.members);
+  const scoredByUsers = formatNumToWords(selecCategoryData?.data?.scored_by);
+
   if (!selecCategoryData) return <div>Loading...</div>;
+
   return (
     <>
       <div className='flex flex-col md:flex-row items-center justify-center gap-4 my-8'>
@@ -37,8 +50,23 @@ const MorePage = ({ id, url }) => {
         {/* Info */}
         <div className='w-full md:w-[50%] p-4'>
           <div>
-            <h1 className='text-2xl font-bold my-4'>
-              {selecCategoryData?.data?.title}
+            <h1 className='text-2xl font-bold my-4 flex justify-center items-center gap-4'>
+              <span>{selecCategoryData?.data?.title}</span>
+              <span>
+                {isWishlisted(wishlist, selecCategoryData.data.mal_id) ? (
+                  <button
+                    className='text-[10px] flex justify-center items-center border w-[50px] px-4  rounded-lg'
+                    onClick={() => removeItem(selecCategoryData.data.mal_id)}>
+                    Remove
+                  </button>
+                ) : (
+                  <button
+                    className='text-[10px] flex justify-center items-center border w-[50px] px-4 rounded-lg'
+                    onClick={() => addItem(selecCategoryData.data)}>
+                    Add
+                  </button>
+                )}
+              </span>
             </h1>
             <div className='border flex items-center py-2 rounded-xl '>
               <div className='flex flex-col  items-center border-r-1 border-white w-1/2'>
@@ -53,9 +81,7 @@ const MorePage = ({ id, url }) => {
                 <div className='text-xl font-bold'>
                   Popularity #{selecCategoryData?.data?.popularity}
                 </div>
-                <div className='text-xl font-bold'>
-                  Members {members}
-                </div>
+                <div className='text-xl font-bold'>Members {members}</div>
               </div>
             </div>
             <p className='body-rounded text-xl flex flex-col my-4'>

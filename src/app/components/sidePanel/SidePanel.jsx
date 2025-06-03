@@ -75,7 +75,7 @@ const SidePanel = ({ title, data }) => {
 
                   {isWishlisted(wishlist, item.mal_id) ? (
                     <button className="text-lg md:text-sm border px-3 py-1 rounded-md" onClick={() =>removeItem(item.mal_id)}>
-                      Added
+                      Remove
                     </button>
                   ) : (
                     <button className="text-lg md:text-sm border px-3 py-1 rounded-md" onClick={() => addItem(item)}>Add</button>

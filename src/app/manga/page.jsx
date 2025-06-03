@@ -92,6 +92,7 @@ const page = () => {
         <div className='flex flex-wrap  md:flex-row justify-center items-center my-4 gap-4'>
           {filteredData?.map((item, index) => (
             <Card
+              item={item}
               key={index}
               img_url={item.images.jpg.large_image_url}
               title={item?.title}
