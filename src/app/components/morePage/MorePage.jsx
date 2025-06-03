@@ -23,7 +23,7 @@ const MorePage = ({ id, url }) => {
   if (!selecCategoryData) return <div>Loading...</div>;
   return (
     <>
-      <div className='flex flex-col md:flex-row items-center justify-center items-center gap-4 my-8'>
+      <div className='flex flex-col md:flex-row items-center justify-center gap-4 my-8'>
         {/* Image */}
         <div className='flex-shrink-0 w-[auto]'>
           <Image
