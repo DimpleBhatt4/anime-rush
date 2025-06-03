@@ -1,27 +1,48 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import useFetch from "@/app/utils/useFetch";
 import Link from "next/link";
 import { getFilteredDataByID } from "@/app/utils/getFilteredDataByID";
 
 export default function SimpleModal() {
   const [query, setQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
   const [result, setResult] = useState([]);
   const dialogRef = useRef(null);
 
-  const { data } = useFetch(`https://api.jikan.moe/v4/anime?q=${query}`);
-  const filteredData = data ? getFilteredDataByID(data?.data) : [];
-
+  // Debounce logic
   useEffect(() => {
-    if (data) {
-      setResult(filteredData);
-      console.log("result", data);
+    const handler = setTimeout(() => {
+      setDebouncedQuery(query);
+    }, 500); // Adjust delay (ms) as needed
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [query]);
+
+  // Fetch on debounced query
+  useEffect(() => {
+    if (debouncedQuery.trim() === "") {
+      setResult([]);
+      return;
     }
-  }, [data]);
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`https://api.jikan.moe/v4/anime?q=${debouncedQuery}`);
+        const json = await res.json();
+        const filtered = getFilteredDataByID(json?.data || []);
+        setResult(filtered);
+      } catch (err) {
+        console.error("Error fetching data", err);
+      }
+    };
+
+    fetchData();
+  }, [debouncedQuery]);
 
   useEffect(() => {
-    // Only run showModal if dialog is available and not already open
     const dialog = dialogRef.current;
     if (dialog && !dialog.open) {
       dialog.showModal();
@@ -32,7 +53,6 @@ export default function SimpleModal() {
     dialogRef.current?.close();
   };
 
-  if (!result) return <div>Loading </div>;
   return (
     <dialog
       ref={dialogRef}
@@ -42,12 +62,12 @@ export default function SimpleModal() {
         placeholder='Search your favorite anime here...'
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        className='bg-gray-200 border border-black w-full sm:w-[30vw] rounded-lg px-2 sm:px-4 py-2 text-left text-white my-4'
+        className='bg-gray-200 border border-black w-full sm:w-[30vw] rounded-lg px-2 sm:px-4 py-2 text-left text-black my-4'
       />
 
       <ul className='mt-4 overflow-auto max-h-[60vh]'>
-        {filteredData.length !== 0 &&
-          result?.map((item) => (
+        {result.length > 0 &&
+          result.map((item) => (
             <Link
               href={`/anime/${item.mal_id}`}
               key={item.mal_id}
@@ -60,7 +80,7 @@ export default function SimpleModal() {
           ))}
       </ul>
 
-      <form method='dialog' className='absolute top-[1%] right-[2%] md:top-[1%] md:right-[2%]'>
+      <form method='dialog' className='absolute top-[1%] right-[2%]'>
         <button className='px-4 py-2 rounded hover:text-gray-300 text-sm'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
