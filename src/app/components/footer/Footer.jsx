@@ -22,7 +22,7 @@ const Footer = () => {
         </ul>
       </div>
 
-      <div className='flex flex-col items-center md:flex-col md:justify-between md:items-center  '>
+      <div className='flex flex-col items-center md:flex-row md:justify-between md:items-center  '>
         <div className="flex gap-4 md:flex-col my-4">
           <div>Created by</div>
           <div className='flex'>
