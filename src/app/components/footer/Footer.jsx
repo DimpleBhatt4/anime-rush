@@ -23,10 +23,10 @@ const Footer = () => {
       </div>
 
       <div className='flex flex-col items-center md:flex-row md:justify-between md:items-center  '>
-        <div className="flex gap-4 md:flex-col my-4 md:my-0">
+        <div className="flex gap-1 md:flex-col my-4 md:my-0">
           <div>Created by</div>
           <div className='flex'>
-            <span>Dimple Bhatt with</span>
+            <span>Dimple Bhatt with </span>
             <span>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
