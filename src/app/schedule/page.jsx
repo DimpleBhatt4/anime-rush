@@ -9,49 +9,49 @@ import { getFilteredDataByID } from "../utils/getFilteredDataByID";
 const page = () => {
   const [daywiseSchedule, setDaywiseSchedule] = useState([
     {
-      day: "All",
+      category: "All",
       url: "https://api.jikan.moe/v4/schedules",
       isActive: true,
       currPage: 1,
     },
     {
-      day: "Monday",
+      category: "Monday",
       url: "https://api.jikan.moe/v4/schedules?filter=monday",
       isActive: false,
       currPage: 1,
     },
     {
-      day: "Tuesday",
+      category: "Tuesday",
       url: "https://api.jikan.moe/v4/schedules?filter=tuesday",
       isActive: false,
       currPage: 1,
     },
     {
-      day: "Wednesday",
+      category: "Wednesday",
       url: "https://api.jikan.moe/v4/schedules?filter=wednesday",
       isActive: false,
       currPage: 1,
     },
     {
-      day: "Thursday",
+      category: "Thursday",
       url: "https://api.jikan.moe/v4/schedules?filter=thursday",
       isActive: false,
       currPage: 1,
     },
     {
-      day: "Friday",
+      category: "Friday",
       url: "https://api.jikan.moe/v4/schedules?filter=friday",
       isActive: false,
       currPage: 1,
     },
     {
-      day: "Saturday",
+      category: "Saturday",
       url: "https://api.jikan.moe/v4/schedules?filter=saturday",
       isActive: false,
       currPage: 1,
     },
     {
-      day: "Sunday",
+      category: "Sunday",
       url: "https://api.jikan.moe/v4/schedules?filter=sunday",
       isActive: false,
       currPage: 1,

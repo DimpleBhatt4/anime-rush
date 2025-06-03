@@ -22,7 +22,7 @@ const ScheduleContainer = ({ title }) => {
 
   const filteredData = schedule ? getFilteredDataByID(schedule?.data) : [];
   return (
-    <div className='border w-full sm:w-[60vw] py-4 px-6 right-container'>
+    <div className='border w-full md:w-[60vw] py-4 px-6 right-container'>
       <div className='flex justify-between'>
         <h1 className='font-bold mb-4 text-2xl'>
           <span>{title} </span>
