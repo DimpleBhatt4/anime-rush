@@ -6,7 +6,7 @@ const Footer = () => {
     <div className='border-t-2 border-white-500  p-4 h-[30vh] flex flex-col justify-between'>
       <div className='flex flex-col items-center'>
         <div className='text-lg md:text-2xl my-4'>Where to?</div>
-        <ul className='flex gap-4 md:gap-8 text-xl'>
+        <ul className='flex flex-col items-center md:flex-row gap-4 md:gap-8 sm:lg md:text-xl'>
           <Link href={"/anime"}>
             <li>Anime</li>
           </Link>
@@ -22,8 +22,8 @@ const Footer = () => {
         </ul>
       </div>
 
-      <div className='flex justify-between items-center  '>
-        <div>
+      <div className='flex flex-col items-center md:flex-col md:justify-between md:items-center  '>
+        <div className="flex gap-4 md:flex-col my-4">
           <div>Created by</div>
           <div className='flex'>
             <span>Dimple Bhatt with</span>
@@ -38,8 +38,8 @@ const Footer = () => {
             </span>
           </div>
         </div>
-        <div>
-          <div className="flex">
+        <div className="">
+          <div className="flex mb-4">
             <span>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
